@@ -7,7 +7,7 @@ const router:any[] = [
         method: 'GET',
         path: '/get-all',
         options:{
-            tags: ['api','auth'],
+            tags: ['api','users'],
             handler: UsersController.getAllUsers,
             description: 'User Registration',
         }
