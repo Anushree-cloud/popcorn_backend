@@ -26,20 +26,22 @@ model organization {
 }
 
 model users {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  first_name String?  @db.VarChar(255)
-  last_name  String?  @db.VarChar(255)
-  password   String
-  created_at DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
-  updated_at DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  first_name    String?   @db.VarChar(255)
+  last_name     String?   @db.VarChar(255)
+  date_of_birth DateTime?
+  blood_group   String?
+  password      String
+  created_at    DateTime  @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+  updated_at    DateTime  @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
 
   //relations
-  org_id  Int
-  org_ref organization @relation(fields: [org_id], references: [id])
+  org    organization @relation(fields: [org_id], references: [id])
+  org_id Int
 
-  role_id  Int
-  role_ref roles @relation(fields: [role_id], references: [id])
+  role    roles @relation(fields: [role_id], references: [id])
+  role_id Int
 }
 
 model roles {

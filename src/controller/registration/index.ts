@@ -14,7 +14,9 @@ async function registration (req: Request, res: ResponseToolkit) {
         email:string,
         password:string,
         org_id: number,
-        roles_id: number
+        role_id: number,
+        date_of_birth: Date,
+        blood_group: string
     })
 
     try{
@@ -38,7 +40,9 @@ async function registration (req: Request, res: ResponseToolkit) {
             email: payload.email,
             password: hashedPassword,
             org_id: payload.org_id,
-            roles_id: payload.roles_id
+            role_id: payload.role_id,
+            date_of_birth: payload.date_of_birth,
+            blood_group: payload.blood_group
         }
         
         let user: any = await prisma.users.create({ data })

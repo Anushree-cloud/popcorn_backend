@@ -40,11 +40,6 @@ async function jwtAuthentication (server:any) {
                     where: {
                         id: artifacts.decoded.payload.user.id
                     },
-                    select: {
-                        email: true,
-                        last_name: true,
-                        first_name: true,
-                    }
                 })
 
                 request.user = userDetails || {}

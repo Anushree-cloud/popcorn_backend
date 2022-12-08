@@ -8,7 +8,7 @@ const router:any[] = [
         path: '/get-all',
         options:{
             tags: ['api','users'],
-            handler: UsersController.getAllUsers,
+            handler: UsersController.getAllUsersUnderAdmin,
             description: 'User Registration',
         }
     },
