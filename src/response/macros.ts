@@ -1,4 +1,4 @@
-function success(data:object, message:string = "Success", statusCode:number = 200) {
+function success(data:object|null, message:string = "Success", statusCode:number = 200) {
     return (res:any) => res.response({ 
         statusCode,
         message,
@@ -6,7 +6,7 @@ function success(data:object, message:string = "Success", statusCode:number = 20
     }).code(statusCode)
 }
 
-function error(data:object, message:string = "Error", statusCode:number = 500) {
+function error(data:object|null, message:string = "Error", statusCode:number = 500) {
     return (res:any) => res.response({ 
         statusCode,
         message,

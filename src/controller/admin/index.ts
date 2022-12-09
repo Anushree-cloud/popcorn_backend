@@ -18,7 +18,11 @@ async function getAllUsersUnderAdmin(req:IRequest, res:Hapi.ResponseToolkit) {
         org_id: number
     })
 
+    const { user_role_id } = (req.query as { user_role_id: number})
+
     try{
+
+        let whereClause: object = user_role_id ? {role_id: user_role_id} : {}
 
         const fetchRole = (await Roles.findFirst({
             where: { id: role_id },
@@ -31,9 +35,13 @@ async function getAllUsersUnderAdmin(req:IRequest, res:Hapi.ResponseToolkit) {
             return response.error({}, 'You have no permission to view user list!', 401)(res)
         }
 
-        const allUsers = await Users.findMany({
+        const allUsers: any[] | null = await Users.findMany({
             where: {
-                org_id
+                org_id,
+                ...whereClause,
+                NOT: {
+                    role_id
+                }
             },
             include: {
                 role: {
@@ -44,8 +52,12 @@ async function getAllUsersUnderAdmin(req:IRequest, res:Hapi.ResponseToolkit) {
                 }
             }
         })
+
+        if(allUsers.length == 0) {
+            return response.error({}, 'No users fetched', 401)(res)
+        }
         
-        return response.success(allUsers, 'All users fetched successfully.')(res)
+        return response.success({allUserCount: allUsers.length, allUsers}, 'All users fetched successfully.')(res)
 
     }catch(err:any) {
         console.log(`${err}`.red)
@@ -53,6 +65,7 @@ async function getAllUsersUnderAdmin(req:IRequest, res:Hapi.ResponseToolkit) {
     }
 
 }
+
 
 export = {
     getAllUsersUnderAdmin

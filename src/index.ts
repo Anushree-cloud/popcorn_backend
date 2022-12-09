@@ -46,7 +46,7 @@ const init = async () => {
     server.route({
         method: 'GET',
         path: '/',
-        handler: (request: Hapi.Request, reply: Hapi.ResponseValue) => {
+        handler: (request: Hapi.Request, reply: Hapi.ResponseToolkit) => {
             return '<h1>This is Popcorn</h1>'
         }
     })

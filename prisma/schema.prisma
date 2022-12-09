@@ -42,6 +42,11 @@ model users {
 
   role    roles @relation(fields: [role_id], references: [id])
   role_id Int
+
+  project    projects? @relation(fields: [project_id], references: [id])
+  project_id Int?
+
+  skill user_with_skills[]
 }
 
 model roles {
@@ -53,4 +58,44 @@ model roles {
 
   //relations
   users users[]
+}
+
+model projects {
+  id                Int       @id @default(autoincrement())
+  project_name      String?
+  short_description String?
+  description       String?
+  start_date        DateTime?
+  end_date          DateTime?
+  project_image     String?
+  created_at        DateTime  @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+  updated_at        DateTime  @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+
+  //relations
+  user users[]
+}
+
+model skills {
+  id           Int      @id @default(autoincrement())
+  skill_name   String?
+  display_name String?
+  created_at   DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+  updated_at   DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+
+  //relations
+  user user_with_skills[]
+}
+
+model user_with_skills {
+
+  created_at   DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+  updated_at   DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @db.Timestamp(6)
+
+  user_id Int
+  user    users @relation(fields: [user_id], references: [id])
+
+  skill_id Int
+  skill    skills @relation(fields: [skill_id], references: [id])
+
+  @@id([user_id, skill_id])
 }

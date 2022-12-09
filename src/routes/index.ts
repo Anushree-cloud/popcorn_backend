@@ -1,6 +1,6 @@
 import * as Hapi from '@hapi/hapi';
 import authRoute from './auth';
-import userRoute from './appUsers'
+import userRoute from './admin'
 import registrationRoute from './registration'
 
 function addPrefix(prefix:string,route:any) {
