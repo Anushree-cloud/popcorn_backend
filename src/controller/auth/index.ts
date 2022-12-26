@@ -16,6 +16,13 @@ async function jwtLogin(req: Hapi.Request, res: Hapi.ResponseToolkit) {
         let userInfo = await prisma.users.findFirst({
             where: { 
                 email: payload.email 
+            },
+            include: {
+                role: {
+                    select: {
+                        display_name: true
+                    }
+                }
             }
         })
 

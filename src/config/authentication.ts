@@ -40,6 +40,9 @@ async function jwtAuthentication (server:any) {
                     where: {
                         id: artifacts.decoded.payload.user.id
                     },
+                    include: {
+                        role: true
+                    }
                 })
 
                 request.user = userDetails || {}
