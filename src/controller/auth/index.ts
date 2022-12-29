@@ -27,7 +27,7 @@ async function jwtLogin(req: Hapi.Request, res: Hapi.ResponseToolkit) {
         })
 
         if(!userInfo) {
-            return response.error({}, "Email doesn't exist")(res)
+            return response.success({}, "Email doesn't exist", 201)(res)
         }
 
         const {password,...user} = userInfo
@@ -35,7 +35,7 @@ async function jwtLogin(req: Hapi.Request, res: Hapi.ResponseToolkit) {
         let isPasswordExist: any = Bcrypt.compareSync(payload.password, password)
 
         if(!isPasswordExist) {
-            return response.error({}, 'Wrong password!')(res)
+            return response.success({}, 'Wrong password!', 201)(res)
         }
                 
         const token = Jwt.token.generate({
